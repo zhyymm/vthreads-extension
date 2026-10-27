@@ -1,0 +1,106 @@
+{
+  "appName": {
+    "message": "VThreads - 视频极速解析下载器",
+    "description": "Extension name"
+  },
+  "appDesc": {
+    "message": "一键提取并保存社交媒体高清无水印原画视频与音频伴奏。",
+    "description": "Extension description"
+  },
+  "extractBtn": {
+    "message": "极速解析",
+    "description": "Extract button"
+  },
+  "placeholder": {
+    "message": "粘贴推特/TikTok/Threads等视频链接...",
+    "description": "Input placeholder"
+  },
+  "detectCurrentTab": {
+    "message": "检测当前页面",
+    "description": "Detect active tab button"
+  },
+  "analyzing": {
+    "message": "正在深度分析视频中...",
+    "description": "Loading state"
+  },
+  "proBadge": {
+    "message": "Pro 原画",
+    "description": "Pro badge"
+  },
+  "freeBadge": {
+    "message": "免费",
+    "description": "Free badge"
+  },
+  "upgradePro": {
+    "message": "升级 Pro 会员",
+    "description": "Upgrade to Pro"
+  },
+  "syncPro": {
+    "message": "同步会员权益",
+    "description": "Sync Pro status"
+  },
+  "proPrompt": {
+    "message": "该分辨率为 Pro 会员专属原画通道，升级后解锁 1080P / 4K / 60FPS 超清与无限制极速提取！",
+    "description": "Pro unlock prompt"
+  },
+  "downloadBtn": {
+    "message": "下载",
+    "description": "Download button"
+  },
+  "audioBtn": {
+    "message": "提取 MP3 音频",
+    "description": "Extract audio button"
+  },
+  "copyLink": {
+    "message": "复制直链",
+    "description": "Copy video link"
+  },
+  "copied": {
+    "message": "已复制到剪贴板！",
+    "description": "Copied notification"
+  },
+  "noUrl": {
+    "message": "请输入或自动检测一个有效的视频链接",
+    "description": "No url error"
+  },
+  "officialSite": {
+    "message": "访问官网",
+    "description": "Visit official site"
+  },
+  "formatsTitle": {
+    "message": "可用分辨率与音频",
+    "description": "Formats list title"
+  },
+  "modalTitle": {
+    "message": "升级 VThreads Pro",
+    "description": "Modal title"
+  },
+  "modalDesc": {
+    "message": "该画质为 Pro 专属原画通道，升级后解锁 1080P / 4K 超清与无限制极速提取！",
+    "description": "Modal description"
+  },
+  "perk1": {
+    "message": "✓ 1080P / 4K / 60FPS 超清原画",
+    "description": "Perk 1"
+  },
+  "perk2": {
+    "message": "✓ 每日无限次极速并发下载",
+    "description": "Perk 2"
+  },
+  "perk3": {
+    "message": "✓ 独立 MP3 音频无损提取",
+    "description": "Perk 3"
+  },
+  "upgradeBtn": {
+    "message": "立即开通 Pro 会员 →",
+    "description": "Upgrade button"
+  },
+  "tgGroup": {
+    "message": "Telegram 官方交流群",
+    "description": "Telegram group footer"
+  },
+  "tgHelp": {
+    "message": "👥 遇到解析问题？点击加入 Telegram 交流群",
+    "description": "Telegram help link"
+  }
+}

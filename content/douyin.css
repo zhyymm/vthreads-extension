@@ -1,0 +1,212 @@
+/* VThreads - Douyin Injected Styles */
+
+.vthreads-douyin-btn-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.vthreads-douyin-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0;
+}
+
+.vthreads-douyin-btn:hover {
+  background: rgba(139, 92, 246, 0.45);
+  border-color: #8b5cf6;
+  transform: scale(1.1);
+}
+
+.vthreads-douyin-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: #8b5cf6;
+}
+
+.vthreads-douyin-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-top: 4px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+}
+
+.vthreads-douyin-btn.is-loading svg {
+  display: none;
+}
+
+.vthreads-douyin-btn.is-loading::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #8b5cf6;
+  border-radius: 50%;
+  animation: vthreads-douyin-spin 0.75s linear infinite;
+}
+
+@keyframes vthreads-douyin-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Floating Quality Popover on Douyin */
+.vthreads-douyin-popover {
+  position: absolute;
+  z-index: 9999999;
+  width: 300px;
+  background: rgba(18, 18, 18, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(139, 92, 246, 0.35);
+  padding: 14px;
+  color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  animation: vthreads-pop-in 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vthreads-douyin-pop-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vthreads-douyin-pop-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 13px;
+  background: linear-gradient(135deg, #a78bfa, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.vthreads-douyin-pop-brand svg {
+  width: 15px;
+  height: 15px;
+  fill: #8b5cf6;
+}
+
+.vthreads-douyin-pop-close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 2px 4px;
+}
+
+.vthreads-douyin-pop-title {
+  font-size: 12px;
+  color: #cbd5e1;
+  margin-bottom: 10px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+.vthreads-douyin-formats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.vthreads-douyin-format-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.vthreads-douyin-format-row:hover {
+  background: rgba(139, 92, 246, 0.2);
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
+.vthreads-douyin-format-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.vthreads-douyin-pill-free {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  font-weight: 700;
+}
+
+.vthreads-douyin-pill-pro {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(236, 72, 153, 0.25));
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  font-weight: 700;
+}
+
+.vthreads-douyin-btn-dl-row {
+  background: #6366f1;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.vthreads-douyin-btn-dl-row:hover {
+  background: #4f46e5;
+}
+
+.vthreads-douyin-btn-locked {
+  background: linear-gradient(135deg, #f59e0b, #ec4899);
+  color: #ffffff;
+}
+
+.vthreads-douyin-pop-toast {
+  text-align: center;
+  font-size: 11px;
+  color: #10b981;
+  padding: 4px 0;
+  display: none;
+}

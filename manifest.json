@@ -1,0 +1,109 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "version": "1.0.2",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "__MSG_appName__"
+  },
+  "background": {
+    "service_worker": "background/service_worker.js"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "downloads",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "https://vthreads.top/*",
+    "*://*.vthreads.top/*",
+    "*://twitter.com/*",
+    "*://*.twitter.com/*",
+    "*://x.com/*",
+    "*://*.x.com/*",
+    "*://threads.net/*",
+    "*://*.threads.net/*",
+    "*://threads.com/*",
+    "*://*.threads.com/*",
+    "*://tiktok.com/*",
+    "*://*.tiktok.com/*",
+    "*://instagram.com/*",
+    "*://*.instagram.com/*",
+    "*://douyin.com/*",
+    "*://*.douyin.com/*",
+    "*://bilibili.com/*",
+    "*://*.bilibili.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://twitter.com/*",
+        "*://*.twitter.com/*",
+        "*://x.com/*",
+        "*://*.x.com/*"
+      ],
+      "js": ["content/twitter.js"],
+      "css": ["content/twitter.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://tiktok.com/*",
+        "*://*.tiktok.com/*"
+      ],
+      "js": ["content/tiktok.js"],
+      "css": ["content/tiktok.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://instagram.com/*",
+        "*://*.instagram.com/*"
+      ],
+      "js": ["content/instagram.js"],
+      "css": ["content/instagram.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://douyin.com/*",
+        "*://*.douyin.com/*"
+      ],
+      "js": ["content/douyin.js"],
+      "css": ["content/douyin.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://bilibili.com/*",
+        "*://*.bilibili.com/*"
+      ],
+      "js": ["content/bilibili.js"],
+      "css": ["content/bilibili.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

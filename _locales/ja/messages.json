@@ -1,0 +1,106 @@
+{
+  "appName": {
+    "message": "VThreads - 動画高速解析・ダウンロード",
+    "description": "Extension name"
+  },
+  "appDesc": {
+    "message": "ソーシャルメディアの動画や音声を高画質・透かしなしで手軽に保存できるダウンローダー。",
+    "description": "Extension description"
+  },
+  "extractBtn": {
+    "message": "高速解析",
+    "description": "Extract button"
+  },
+  "placeholder": {
+    "message": "Twitter、TikTok、Threadsなどの動画リンクを貼り付け...",
+    "description": "Input placeholder"
+  },
+  "detectCurrentTab": {
+    "message": "現在のタブを検出",
+    "description": "Detect active tab button"
+  },
+  "analyzing": {
+    "message": "動画ストリームを解析中...",
+    "description": "Loading state"
+  },
+  "proBadge": {
+    "message": "Pro 高画質",
+    "description": "Pro badge"
+  },
+  "freeBadge": {
+    "message": "無料",
+    "description": "Free badge"
+  },
+  "upgradePro": {
+    "message": "Proにアップグレード",
+    "description": "Upgrade to Pro"
+  },
+  "syncPro": {
+    "message": "会員ステータス同期",
+    "description": "Sync Pro status"
+  },
+  "proPrompt": {
+    "message": "この解像度はProメンバー限定です。アップグレードして1080P/4K超高画質と無制限ダウンロードを解放しましょう！",
+    "description": "Pro unlock prompt"
+  },
+  "downloadBtn": {
+    "message": "ダウンロード",
+    "description": "Download button"
+  },
+  "audioBtn": {
+    "message": "MP3音声を抽出",
+    "description": "Extract audio button"
+  },
+  "copyLink": {
+    "message": "リンクをコピー",
+    "description": "Copy video link"
+  },
+  "copied": {
+    "message": "クリップボードにコピーしました！",
+    "description": "Copied notification"
+  },
+  "noUrl": {
+    "message": "有効な動画URLを入力または検出してください",
+    "description": "No url error"
+  },
+  "officialSite": {
+    "message": "公式サイトへ",
+    "description": "Visit official site"
+  },
+  "formatsTitle": {
+    "message": "利用可能な解像度と音声",
+    "description": "Formats list title"
+  },
+  "modalTitle": {
+    "message": "VThreads Proにアップグレード",
+    "description": "Modal title"
+  },
+  "modalDesc": {
+    "message": "この解像度はPro専用です。アップグレードして1080P/4K超高画質と無制限ダウンロードを解放しましょう！",
+    "description": "Modal description"
+  },
+  "perk1": {
+    "message": "✓ 1080P / 4K / 60FPS 超高画質",
+    "description": "Perk 1"
+  },
+  "perk2": {
+    "message": "✓ 毎日無制限の高速同時ダウンロード",
+    "description": "Perk 2"
+  },
+  "perk3": {
+    "message": "✓ 高音質MP3音声の個別抽出",
+    "description": "Perk 3"
+  },
+  "upgradeBtn": {
+    "message": "今すぐPro会員になる →",
+    "description": "Upgrade button"
+  },
+  "tgGroup": {
+    "message": "Telegram コミュニティ",
+    "description": "Telegram group footer"
+  },
+  "tgHelp": {
+    "message": "👥 お困りですか？Telegram公式グループへ",
+    "description": "Telegram help link"
+  }
+}

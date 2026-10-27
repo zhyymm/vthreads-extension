@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VThreads Extension</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- 头部导航 -->
+    <header class="header">
+      <div class="brand">
+        <img src="../icons/icon48.png" alt="Logo" class="logo">
+        <div class="brand-text">
+          <span class="brand-name">VThreads</span>
+          <span class="pro-tag" id="userTierBadge">FREE</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="btnSyncPro" class="icon-btn" title="同步会员权益">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- 输入与自动检测栏 -->
+    <div class="input-section">
+      <div class="input-wrapper">
+        <input 
+          type="text" 
+          id="urlInput" 
+          placeholder="粘贴推特/TikTok/Threads等视频链接..." 
+          autocomplete="off" 
+          spellcheck="false"
+        >
+        <button id="btnClear" class="clear-btn" style="display: none;">&times;</button>
+      </div>
+
+      <div class="button-row">
+        <button id="btnDetectTab" class="secondary-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 14 14"/>
+          </svg>
+          <span data-i18n="detectCurrentTab">检测当前页面</span>
+        </button>
+        <button id="btnExtract" class="primary-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="5 3 19 12 5 21 5 3"/>
+          </svg>
+          <span data-i18n="extractBtn">极速解析</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 加载状态 -->
+    <div id="loadingState" class="state-container" style="display: none;">
+      <div class="spinner"></div>
+      <p class="state-text" data-i18n="analyzing">正在深度分析视频中...</p>
+    </div>
+
+    <!-- 错误状态 -->
+    <div id="errorState" class="state-container error-box" style="display: none;">
+      <div class="error-icon">⚠️</div>
+      <p id="errorMsg" class="error-text"></p>
+      <a href="https://t.me/vthreads_top" target="_blank" class="tg-help-link" data-i18n="tgHelp">
+        👥 遇到解析问题？点击加入 Telegram 交流群
+      </a>
+    </div>
+
+    <!-- 解析结果展示区 -->
+    <div id="resultSection" class="result-section" style="display: none;">
+      <div class="video-preview-card">
+        <div class="thumb-container">
+          <img id="videoThumb" src="" alt="Thumbnail" class="video-thumb">
+          <span id="platformBadge" class="platform-badge">Twitter</span>
+          <span id="durationBadge" class="duration-badge" style="display: none;">00:00</span>
+        </div>
+        <div class="video-meta">
+          <h3 id="videoTitle" class="video-title">视频标题</h3>
+        </div>
+      </div>
+
+      <div class="formats-list-title" data-i18n="formatsTitle">可用分辨率与音频</div>
+      <div id="formatsList" class="formats-list">
+        <!-- 动态填充清晰度选项卡片 -->
+      </div>
+    </div>
+
+    <!-- Pro 会员拦截弹窗 (Modal) -->
+    <div id="proModal" class="modal-overlay" style="display: none;">
+      <div class="modal-card">
+        <button id="btnCloseModal" class="modal-close">&times;</button>
+        <div class="modal-icon">⚡</div>
+        <h3 class="modal-title" data-i18n="modalTitle">升级 VThreads Pro</h3>
+        <p class="modal-desc" id="modalDesc" data-i18n="modalDesc">
+          该画质为 Pro 专属原画通道，升级后解锁 1080P / 4K 超清与无限制极速提取！
+        </p>
+        <div class="modal-perks">
+          <div class="perk-item" data-i18n="perk1">✓ 1080P / 4K / 60FPS 超清原画</div>
+          <div class="perk-item" data-i18n="perk2">✓ 每日无限次极速并发下载</div>
+          <div class="perk-item" data-i18n="perk3">✓ 独立 MP3 音频无损提取</div>
+        </div>
+        <a id="btnUpgradePlans" href="https://vthreads.top/zh/plans/" target="_blank" class="modal-upgrade-btn" data-i18n="upgradeBtn">
+          立即开通 Pro 会员 →
+        </a>
+      </div>
+    </div>
+
+    <!-- 底部栏 -->
+    <footer class="footer">
+      <a href="https://vthreads.top" target="_blank" class="footer-link" data-i18n="officialSite">
+        🌐 访问官网
+      </a>
+      <span class="footer-dot">·</span>
+      <a href="https://t.me/vthreads_top" target="_blank" class="footer-link" data-i18n="tgGroup">
+        Telegram 官方交流群
+      </a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+{
+  "appName": {
+    "message": "VThreads - 초고속 비디오 다운로더",
+    "description": "Extension name"
+  },
+  "appDesc": {
+    "message": "소셜 피드의 동영상과 오디오를 워터마크 없이 초고화질로 간편하게 추출하고 다운로드하세요.",
+    "description": "Extension description"
+  },
+  "extractBtn": {
+    "message": "초고속 추출",
+    "description": "Extract button"
+  },
+  "placeholder": {
+    "message": "Twitter, TikTok, Threads 등 동영상 링크를 붙여넣으세요...",
+    "description": "Input placeholder"
+  },
+  "detectCurrentTab": {
+    "message": "현재 탭 감지",
+    "description": "Detect active tab button"
+  },
+  "analyzing": {
+    "message": "비디오 스트림 정밀 분석 중...",
+    "description": "Loading state"
+  },
+  "proBadge": {
+    "message": "Pro 원본",
+    "description": "Pro badge"
+  },
+  "freeBadge": {
+    "message": "무료",
+    "description": "Free badge"
+  },
+  "upgradePro": {
+    "message": "Pro 업그레이드",
+    "description": "Upgrade to Pro"
+  },
+  "syncPro": {
+    "message": "멤버십 상태 동기화",
+    "description": "Sync Pro status"
+  },
+  "proPrompt": {
+    "message": "이 화질은 Pro 전용 채널입니다. 업그레이드하여 1080P/4K 초고화질 및 무제한 다운로드를 잠금 해제하세요!",
+    "description": "Pro unlock prompt"
+  },
+  "downloadBtn": {
+    "message": "다운로드",
+    "description": "Download button"
+  },
+  "audioBtn": {
+    "message": "MP3 오디오 추출",
+    "description": "Extract audio button"
+  },
+  "copyLink": {
+    "message": "직접 링크 복사",
+    "description": "Copy video link"
+  },
+  "copied": {
+    "message": "클립보드에 복사되었습니다!",
+    "description": "Copied notification"
+  },
+  "noUrl": {
+    "message": "올바른 동영상 URL을 입력하거나 감지해 주세요",
+    "description": "No url error"
+  },
+  "officialSite": {
+    "message": "공식 웹사이트 방문",
+    "description": "Visit official site"
+  },
+  "formatsTitle": {
+    "message": "다운로드 가능한 화질 및 오디오",
+    "description": "Formats list title"
+  },
+  "modalTitle": {
+    "message": "VThreads Pro로 업그레이드",
+    "description": "Modal title"
+  },
+  "modalDesc": {
+    "message": "이 화질은 Pro 전용 채널입니다. 업그레이드하여 1080P / 4K 초고화질 및 무제한 추출을 잠금 해제하세요!",
+    "description": "Modal description"
+  },
+  "perk1": {
+    "message": "✓ 1080P / 4K / 60FPS 초고화질 원본",
+    "description": "Perk 1"
+  },
+  "perk2": {
+    "message": "✓ 매일 무제한 초고속 동시 다운로드",
+    "description": "Perk 2"
+  },
+  "perk3": {
+    "message": "✓ 독립 MP3 무손실 오디오 추출",
+    "description": "Perk 3"
+  },
+  "upgradeBtn": {
+    "message": "지금 Pro 멤버십 시작하기 →",
+    "description": "Upgrade button"
+  },
+  "tgGroup": {
+    "message": "Telegram 공식 커뮤니티",
+    "description": "Telegram group footer"
+  },
+  "tgHelp": {
+    "message": "👥 문제 발생 시 Telegram 커뮤니티에 문의하세요",
+    "description": "Telegram help link"
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "appName": {
+    "message": "VThreads - Media & Video Downloader",
+    "description": "Extension name"
+  },
+  "appDesc": {
+    "message": "Fast, watermark-free HD video and audio downloader for online feeds and media posts.",
+    "description": "Extension description"
+  },
+  "extractBtn": {
+    "message": "Extract",
+    "description": "Extract button"
+  },
+  "placeholder": {
+    "message": "Paste video link from Twitter, TikTok, Threads...",
+    "description": "Input placeholder"
+  },
+  "detectCurrentTab": {
+    "message": "Detect Active Tab",
+    "description": "Detect active tab button"
+  },
+  "analyzing": {
+    "message": "Analyzing video streams...",
+    "description": "Loading state"
+  },
+  "proBadge": {
+    "message": "Pro Ultra",
+    "description": "Pro badge"
+  },
+  "freeBadge": {
+    "message": "Free",
+    "description": "Free badge"
+  },
+  "upgradePro": {
+    "message": "Upgrade to Pro",
+    "description": "Upgrade to Pro"
+  },
+  "syncPro": {
+    "message": "Sync Pro Status",
+    "description": "Sync Pro status"
+  },
+  "proPrompt": {
+    "message": "This resolution is exclusive to Pro members. Upgrade to unlock 1080P, 4K, 60FPS ultra HD & unlimited extraction!",
+    "description": "Pro unlock prompt"
+  },
+  "downloadBtn": {
+    "message": "Download",
+    "description": "Download button"
+  },
+  "audioBtn": {
+    "message": "Extract MP3 Audio",
+    "description": "Extract audio button"
+  },
+  "copyLink": {
+    "message": "Copy Direct Link",
+    "description": "Copy video link"
+  },
+  "copied": {
+    "message": "Copied to clipboard!",
+    "description": "Copied notification"
+  },
+  "noUrl": {
+    "message": "Please enter or detect a valid video URL",
+    "description": "No url error"
+  },
+  "officialSite": {
+    "message": "Visit VThreads Web",
+    "description": "Visit official site"
+  },
+  "formatsTitle": {
+    "message": "Available Resolutions & Audio",
+    "description": "Formats list title"
+  },
+  "modalTitle": {
+    "message": "Upgrade to VThreads Pro",
+    "description": "Modal title"
+  },
+  "modalDesc": {
+    "message": "This resolution is exclusive to Pro members. Upgrade to unlock 1080P / 4K ultra HD and unlimited fast extraction!",
+    "description": "Modal description"
+  },
+  "perk1": {
+    "message": "✓ 1080P / 4K / 60FPS Ultra HD",
+    "description": "Perk 1"
+  },
+  "perk2": {
+    "message": "✓ Unlimited Daily Fast Downloads",
+    "description": "Perk 2"
+  },
+  "perk3": {
+    "message": "✓ Lossless MP3 Audio Extraction",
+    "description": "Perk 3"
+  },
+  "upgradeBtn": {
+    "message": "Upgrade to Pro Now →",
+    "description": "Upgrade button"
+  },
+  "tgGroup": {
+    "message": "Telegram Community",
+    "description": "Telegram group footer"
+  },
+  "tgHelp": {
+    "message": "👥 Need help? Join our Telegram Group",
+    "description": "Telegram help link"
+  }
+}
