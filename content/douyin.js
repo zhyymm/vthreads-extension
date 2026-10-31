@@ -235,7 +235,7 @@
         document.title.replace(/- 抖音.*$/, "").trim() ||
         "douyin_video";
 
-      if (src && /^https?:\/\//i.test(src)) {
+      if (src && /^https?:\/\//i.test(src) && !src.includes("/aweme/v1/play/") && (src.includes("douyinvod.com") || src.includes("zjcdn.com") || src.includes(".mp4"))) {
         return {
           success: true,
           info: {

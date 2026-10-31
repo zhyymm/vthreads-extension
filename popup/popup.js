@@ -305,23 +305,37 @@ function renderResult(info) {
     const card = document.createElement("div");
     card.className = "format-card";
 
-    // 优先直连平台官方高速 CDN（走用户本地家庭宽带，0 服务器流量）
-    let downloadUrl = m.raw_url || m.url || "";
-    if (downloadUrl.includes("/api/proxy")) {
-      try {
-        const fullUrl = downloadUrl.startsWith("http") ? downloadUrl : `${API_BASE}${downloadUrl}`;
-        const uObj = new URL(fullUrl);
-        const rawCdn = uObj.searchParams.get("url");
-        if (rawCdn && /^https?:\/\//i.test(rawCdn)) {
-          downloadUrl = rawCdn;
-        } else {
-          downloadUrl = fullUrl;
+    // 判断是否为合并任务（B站 DASH、无声分轨合并等）
+    const isMergeFormat = m.format === "merge" || (m.url && (m.url.includes("/api/download_merge") || m.url.includes("/api/download_jable")));
+    let downloadUrl = "";
+    let proxyUrl = "";
+
+    if (isMergeFormat) {
+      // 合并任务严格保留 /api/download_merge，交由后台轮询合成，绝不可直连分轨 m4s
+      downloadUrl = m.url || "";
+      if (downloadUrl.startsWith("/")) downloadUrl = `${API_BASE}${downloadUrl}`;
+    } else {
+      // 单流视频：优先直连平台 CDN（走用户带宽），同时保留代理地址作为异常兜底
+      if (m.url && m.url.includes("/api/proxy")) {
+        proxyUrl = m.url.startsWith("/") ? `${API_BASE}${m.url}` : m.url;
+        try {
+          const uObj = new URL(proxyUrl);
+          const rawCdn = uObj.searchParams.get("url");
+          if (rawCdn && /^https?:\/\//i.test(rawCdn)) {
+            downloadUrl = rawCdn;
+          } else {
+            downloadUrl = proxyUrl;
+          }
+        } catch {
+          downloadUrl = proxyUrl;
         }
-      } catch (e) {
+      } else if (m.raw_url && /^https?:\/\//i.test(m.raw_url)) {
+        downloadUrl = m.raw_url;
+        proxyUrl = m.url && m.url.startsWith("/") ? `${API_BASE}${m.url}` : (m.url || "");
+      } else {
+        downloadUrl = m.url || "";
         if (downloadUrl.startsWith("/")) downloadUrl = `${API_BASE}${downloadUrl}`;
       }
-    } else if (downloadUrl.startsWith("/")) {
-      downloadUrl = `${API_BASE}${downloadUrl}`;
     }
 
     const isAudio = m.format === "mp3" || /audio/i.test(m.quality);
@@ -345,7 +359,7 @@ function renderResult(info) {
             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
           </svg>
         </button>
-        <button class="dl-btn ${isProLocked ? "btn-locked" : ""}" data-url="${escapeHtml(downloadUrl)}" data-pro="${isProLocked}">
+        <button class="dl-btn ${isProLocked ? "btn-locked" : ""}" data-url="${escapeHtml(downloadUrl)}" data-proxy="${escapeHtml(proxyUrl)}" data-merge="${isMergeFormat}" data-pro="${isProLocked}">
           ${isProLocked ? "⚡ 解锁 4K" : "下载"}
         </button>
       </div>
@@ -362,12 +376,13 @@ function renderResult(info) {
     card.querySelector(".dl-btn").addEventListener("click", (e) => {
       const isLocked = e.currentTarget.getAttribute("data-pro") === "true";
       const u = e.currentTarget.getAttribute("data-url");
+      const pUrl = e.currentTarget.getAttribute("data-proxy") || "";
+      const isMerge = e.currentTarget.getAttribute("data-merge") === "true" || u.includes("/api/download_merge") || u.includes("/api/download_jable");
       if (isLocked) {
         document.getElementById("proModal").style.display = "flex";
       } else {
         const btn = e.currentTarget;
         const originalText = btn.textContent;
-        const isMerge = u.includes("/api/download_merge") || u.includes("/api/download_jable");
         if (isMerge) {
           btn.textContent = "合并中...";
           btn.disabled = true;
@@ -377,12 +392,14 @@ function renderResult(info) {
           .replace(/\s+/g, " ")
           .trim()
           .slice(0, 60);
-        const filename = `${cleanTitle}_${m.quality || "hd"}.mp4`;
+        const filename = `${cleanTitle}_${m.quality || "hd"}.${m.format && m.format !== "merge" ? m.format : "mp4"}`;
 
         chrome.runtime.sendMessage(
           {
             action: "TRIGGER_DOWNLOAD",
             url: u,
+            proxyUrl: pUrl,
+            isMerge: isMerge,
             vid: currentVid,
             filename: filename
           },
@@ -399,6 +416,7 @@ function renderResult(info) {
 
     listEl.appendChild(card);
   });
+
 
   resultSection.style.display = "flex";
 }

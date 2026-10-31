@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_appName__",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "__MSG_appDesc__",
   "default_locale": "en",
   "icons": {
@@ -31,9 +31,12 @@
   "host_permissions": [
     "*://*.bilibili.com/*",
     "*://*.bilivideo.com/*",
+    "*://*.byteimg.com/*",
     "*://*.cdninstagram.com/*",
     "*://*.douyin.com/*",
+    "*://*.douyincdn.com/*",
     "*://*.douyinvod.com/*",
+    "*://*.ibytedtos.com/*",
     "*://*.instagram.com/*",
     "*://*.ixigua.com/*",
     "*://*.redd.it/*",
@@ -45,6 +48,7 @@
     "*://*.twitter.com/*",
     "*://*.vthreads.top/*",
     "*://*.x.com/*",
+    "*://*.zjcdn.com/*",
     "*://bilibili.com/*",
     "*://douyin.com/*",
     "*://instagram.com/*",

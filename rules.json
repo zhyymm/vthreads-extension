@@ -23,7 +23,8 @@
         "xmlhttprequest",
         "other",
         "sub_frame",
-        "main_frame"
+        "main_frame",
+        "media"
       ]
     }
   },
@@ -51,7 +52,8 @@
         "xmlhttprequest",
         "other",
         "sub_frame",
-        "main_frame"
+        "main_frame",
+        "media"
       ]
     }
   },
@@ -74,7 +76,8 @@
         "xmlhttprequest",
         "other",
         "sub_frame",
-        "main_frame"
+        "main_frame",
+        "media"
       ]
     }
   },
@@ -102,7 +105,8 @@
         "xmlhttprequest",
         "other",
         "sub_frame",
-        "main_frame"
+        "main_frame",
+        "media"
       ]
     }
   },
@@ -125,7 +129,8 @@
         "xmlhttprequest",
         "other",
         "sub_frame",
-        "main_frame"
+        "main_frame",
+        "media"
       ]
     }
   },
@@ -148,7 +153,80 @@
         "xmlhttprequest",
         "other",
         "sub_frame",
-        "main_frame"
+        "main_frame",
+        "media"
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        {
+          "header": "Referer",
+          "operation": "set",
+          "value": "https://www.douyin.com/"
+        }
+      ]
+    },
+    "condition": {
+      "urlFilter": "||zjcdn.com*",
+      "resourceTypes": [
+        "xmlhttprequest",
+        "other",
+        "sub_frame",
+        "main_frame",
+        "media"
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        {
+          "header": "Referer",
+          "operation": "set",
+          "value": "https://www.douyin.com/"
+        }
+      ]
+    },
+    "condition": {
+      "urlFilter": "||byteimg.com*",
+      "resourceTypes": [
+        "xmlhttprequest",
+        "other",
+        "sub_frame",
+        "main_frame",
+        "media"
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "priority": 1,
+    "action": {
+      "type": "modifyHeaders",
+      "requestHeaders": [
+        {
+          "header": "Referer",
+          "operation": "set",
+          "value": "https://www.douyin.com/"
+        }
+      ]
+    },
+    "condition": {
+      "urlFilter": "||douyincdn.com*",
+      "resourceTypes": [
+        "xmlhttprequest",
+        "other",
+        "sub_frame",
+        "main_frame",
+        "media"
       ]
     }
   }

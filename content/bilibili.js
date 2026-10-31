@@ -309,10 +309,10 @@
               )}&audio_url=${encodeURIComponent(bestAudio)}&title=${encodeURIComponent(title)}`;
 
               medias.push({
-                format: "mp4",
+                format: "merge",
                 quality: qName,
                 url: mergeUrl,
-                raw_url: vUrl,
+                raw_url: mergeUrl,
                 size: ""
               });
             }

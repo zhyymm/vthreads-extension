@@ -109,15 +109,30 @@ async function extractVideo(targetUrl) {
 // 4. 执行下载触发（支持直链、代理流以及服务端合并任务）
 async function executeDownload(request) {
   let downloadUrl = request.url || "";
+  let proxyUrl = request.proxyUrl || "";
   let vid = request.vid || (await ensureVisitorId());
-  const filename = request.filename || "vthreads_video.mp4";
+  let filename = (request.filename || "vthreads_video.mp4")
+    .replace(/[/\\?%*:|"<>]/g, "_")
+    .replace(/[\x00-\x1f\x80-\x9f]/g, "")
+    .replace(/\s+/g, " ")
+    .replace(/\.+$/, "")
+    .trim();
+  if (!filename) filename = "vthreads_video.mp4";
 
   if (downloadUrl.startsWith("/")) {
     downloadUrl = `${API_BASE}${downloadUrl}`;
   }
+  if (proxyUrl && proxyUrl.startsWith("/")) {
+    proxyUrl = `${API_BASE}${proxyUrl}`;
+  }
+
+  const isMerge =
+    request.isMerge ||
+    downloadUrl.includes("/api/download_merge") ||
+    downloadUrl.includes("/api/download_jable");
 
   // A. 服务端合并任务 (/api/download_merge 或 /api/download_jable)
-  if (downloadUrl.includes("/api/download_merge") || downloadUrl.includes("/api/download_jable")) {
+  if (isMerge) {
     const sep = downloadUrl.includes("?") ? "&" : "?";
     if (!downloadUrl.includes("vid=") && vid) {
       downloadUrl += `${sep}vid=${encodeURIComponent(vid)}&client=extension`;
@@ -176,30 +191,35 @@ async function executeDownload(request) {
     throw new Error("视频合并超时，请稍后重试");
   }
 
-  // B. 核心优化：单流视频脱除 /api/proxy 外层，直连平台官方 CDN（走用户本地家庭宽带，0 服务器流量）
-  if (downloadUrl.includes("/api/proxy")) {
+  // B. 单流视频：优先直连平台官方 CDN（走用户本地家庭宽带，0 服务器流量）
+  let targetUrl = downloadUrl;
+
+  // 深度安全防护：如果直连平台 CDN 响应非视频（例如返回 403 / text/html 错误拦截页），自动回退到 /api/proxy 代理通道
+  let needsProxyFallback = false;
+  if (!targetUrl.includes("/api/proxy")) {
     try {
-      const fullUrl = downloadUrl.startsWith("http") ? downloadUrl : `${API_BASE}${downloadUrl}`;
-      const urlObj = new URL(fullUrl);
-      const rawCdn = urlObj.searchParams.get("url");
-      if (rawCdn && /^https?:\/\//i.test(rawCdn)) {
-        console.log("[VThreads Background] 脱除代理外壳，直连官方 CDN 下载 (0 服务器带宽):", rawCdn);
-        downloadUrl = rawCdn;
-      } else {
-        const sep = downloadUrl.includes("?") ? "&" : "?";
-        if (!downloadUrl.includes("vid=") && vid) {
-          downloadUrl += `${sep}vid=${encodeURIComponent(vid)}&client=extension`;
-        } else if (!downloadUrl.includes("client=")) {
-          downloadUrl += `${sep}client=extension`;
-        }
+      const probeRes = await fetch(targetUrl, { method: "HEAD" });
+      const ct = probeRes.headers.get("content-type") || "";
+      if (!probeRes.ok || ct.includes("text/html")) {
+        console.warn("[VThreads Background] 直连 CDN 响应异常或为 HTML 页面，自动切换为安全代理下载:", probeRes.status, ct);
+        needsProxyFallback = true;
       }
     } catch (e) {
-      console.warn("[VThreads Background] 解包代理地址异常，回退默认代理:", e);
+      console.warn("[VThreads Background] 直连 CDN 探测失败，启用代理兜底:", e);
+      needsProxyFallback = true;
+    }
+  }
+
+  if (needsProxyFallback) {
+    if (proxyUrl) {
+      targetUrl = proxyUrl;
+    } else {
+      targetUrl = `${API_BASE}/api/proxy?url=${encodeURIComponent(downloadUrl)}&filename=${encodeURIComponent(filename)}&vid=${encodeURIComponent(vid)}&client=extension`;
     }
   }
 
   // C. 触发 Chrome 下载
-  return await startChromeDownload(downloadUrl, filename);
+  return await startChromeDownload(targetUrl, filename);
 }
 
 function startChromeDownload(url, filename) {
@@ -213,17 +233,15 @@ function startChromeDownload(url, filename) {
         },
         (downloadId) => {
           if (chrome.runtime.lastError) {
-            console.warn("[VThreads Background] download error, fallback to tabs.create:", chrome.runtime.lastError);
-            chrome.tabs.create({ url: url });
-            resolve({ success: true });
+            console.error("[VThreads Background] Chrome download error:", chrome.runtime.lastError);
+            reject(new Error(chrome.runtime.lastError.message || "浏览器下载失败"));
           } else {
             resolve({ success: true, downloadId });
           }
         }
       );
     } else {
-      chrome.tabs.create({ url: url });
-      resolve({ success: true });
+      reject(new Error("浏览器不支持 chrome.downloads 接口"));
     }
   });
 }
