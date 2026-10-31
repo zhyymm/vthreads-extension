@@ -102,10 +102,10 @@
                 )}&audio_url=${encodeURIComponent(audioUrl)}&title=${encodeURIComponent(title)}`;
 
                 medias.push({
-                  format: "mp4",
+                  format: "merge",
                   quality: `${height}p 原画`,
                   url: mergeUrl,
-                  raw_url: cleanFallback,
+                  raw_url: mergeUrl,
                   size: ""
                 });
 
@@ -306,7 +306,7 @@
         }
 
         // 优先直连平台官方 CDN（走用户本地家庭宽带，0 服务器流量）
-        let dlUrl = m.raw_url || m.url || "";
+        let dlUrl = (m.format === "merge" || (m.url && m.url.includes("/api/download_merge"))) ? m.url : (m.raw_url || m.url || "");
         const cleanTitle = (info.title || "reddit_video").replace(/[/\\?%*:|"<>]/g, "_").slice(0, 50);
 
         chrome.runtime.sendMessage({
