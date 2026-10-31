@@ -219,6 +219,43 @@
     subtree: true
   });
 
+  // 响应来自 Extension Popup 的本地嗅探请求 (SNIFF_LOCAL_MEDIA)
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "SNIFF_LOCAL_MEDIA") {
+      try {
+        const v = document.querySelector('article[data-testid="tweet"] video') || document.querySelector("video");
+        const src = v?.currentSrc || v?.src || "";
+        const text =
+          document.querySelector('article[data-testid="tweet"] [data-testid="tweetText"]')?.textContent?.trim() ||
+          document.title.replace(/\/ X.*$/, "").trim() ||
+          "twitter_video";
+        if (src && /^https?:\/\//i.test(src) && !src.startsWith("blob:")) {
+          sendResponse({
+            success: true,
+            info: {
+              title: text.slice(0, 80),
+              platform: "twitter",
+              medias: [
+                {
+                  format: "mp4",
+                  quality: "原画",
+                  url: src,
+                  raw_url: src,
+                  size: ""
+                }
+              ]
+            }
+          });
+          return true;
+        }
+      } catch (e) {
+        console.warn("[VThreads Twitter] Sniff error:", e);
+      }
+      sendResponse({ success: false });
+      return true;
+    }
+  });
+
   // 首次运行
   scanAndInject();
 })();

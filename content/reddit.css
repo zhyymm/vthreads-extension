@@ -1,0 +1,206 @@
+/* VThreads Extension - Reddit Feed & Detail In-Page Injection Styles */
+
+.vthreads-reddit-btn-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 4px;
+}
+
+.vthreads-reddit-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: rgba(255, 69, 0, 0.08);
+  border: 1px solid rgba(255, 69, 0, 0.25);
+  color: #ff4500;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vthreads-reddit-btn:hover {
+  background-color: #ff4500;
+  color: #ffffff;
+  border-color: #ff4500;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 69, 0, 0.35);
+}
+
+.vthreads-reddit-btn svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.vthreads-reddit-btn.is-loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.vthreads-reddit-btn.is-loading::after {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: vt-spin 0.6s linear infinite;
+}
+
+@keyframes vt-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Popover Modal (Card) */
+.vthreads-popover {
+  position: absolute;
+  z-index: 2147483647;
+  background: #1a1a1b;
+  color: #d7dadc;
+  border: 1px solid #343536;
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  padding: 14px;
+  width: 300px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.vthreads-pop-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.vthreads-pop-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ff4500;
+}
+
+.vthreads-pop-brand svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+.vthreads-pop-close {
+  background: transparent;
+  border: none;
+  color: #818384;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+
+.vthreads-pop-close:hover {
+  color: #ffffff;
+}
+
+.vthreads-pop-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #d7dadc;
+  margin-bottom: 12px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.vthreads-formats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.vthreads-format-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #272729;
+  border: 1px solid #343536;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.vthreads-format-row:hover {
+  border-color: #ff4500;
+  background: #2e2f31;
+}
+
+.vthreads-format-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.vthreads-pill-pro {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.vthreads-pill-free {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.vthreads-format-size {
+  color: #818384;
+  font-size: 11px;
+}
+
+.vthreads-btn-dl-row {
+  background: #ff4500;
+  color: #ffffff;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 6px;
+  padding: 4px 10px;
+  cursor: pointer;
+}
+
+.vthreads-btn-dl-row:hover {
+  background: #e03d00;
+}
+
+.vthreads-btn-locked {
+  background: #343536;
+  color: #f59e0b;
+}
+
+.vthreads-pop-toast {
+  display: none;
+  text-align: center;
+  font-size: 12px;
+  color: #10b981;
+  margin-top: 8px;
+  font-weight: 600;
+}
+

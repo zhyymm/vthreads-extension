@@ -176,13 +176,25 @@ async function executeDownload(request) {
     throw new Error("视频合并超时，请稍后重试");
   }
 
-  // B. 代理下载流程 (/api/proxy)
+  // B. 核心优化：单流视频脱除 /api/proxy 外层，直连平台官方 CDN（走用户本地家庭宽带，0 服务器流量）
   if (downloadUrl.includes("/api/proxy")) {
-    const sep = downloadUrl.includes("?") ? "&" : "?";
-    if (!downloadUrl.includes("vid=") && vid) {
-      downloadUrl += `${sep}vid=${encodeURIComponent(vid)}&client=extension`;
-    } else if (!downloadUrl.includes("client=")) {
-      downloadUrl += `${sep}client=extension`;
+    try {
+      const fullUrl = downloadUrl.startsWith("http") ? downloadUrl : `${API_BASE}${downloadUrl}`;
+      const urlObj = new URL(fullUrl);
+      const rawCdn = urlObj.searchParams.get("url");
+      if (rawCdn && /^https?:\/\//i.test(rawCdn)) {
+        console.log("[VThreads Background] 脱除代理外壳，直连官方 CDN 下载 (0 服务器带宽):", rawCdn);
+        downloadUrl = rawCdn;
+      } else {
+        const sep = downloadUrl.includes("?") ? "&" : "?";
+        if (!downloadUrl.includes("vid=") && vid) {
+          downloadUrl += `${sep}vid=${encodeURIComponent(vid)}&client=extension`;
+        } else if (!downloadUrl.includes("client=")) {
+          downloadUrl += `${sep}client=extension`;
+        }
+      }
+    } catch (e) {
+      console.warn("[VThreads Background] 解包代理地址异常，回退默认代理:", e);
     }
   }
 

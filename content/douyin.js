@@ -65,6 +65,14 @@
         const targetUrl = videoUrl.includes("/video/") ? videoUrl : window.location.href;
 
         try {
+          // 优先就地嗅探本地激活的视频容器 (0 服务端 Cookie, 0 服务端风控)
+          const local = sniffDouyinLocalMedia();
+          if (local && local.info && local.info.medias?.length > 0) {
+            btn.classList.remove("is-loading");
+            showQualityPopover(btn, local.info, false, "");
+            return;
+          }
+
           const resp = await chrome.runtime.sendMessage({
             action: "EXTRACT_VIDEO",
             url: targetUrl
@@ -160,7 +168,7 @@
           return;
         }
 
-        let dlUrl = m.url || m.raw_url || "";
+        let dlUrl = m.raw_url || m.url || "";
         chrome.runtime.sendMessage({
           action: "TRIGGER_DOWNLOAD",
           url: dlUrl,
@@ -208,6 +216,48 @@
   });
 
   observer.observe(document.body, { childList: true, subtree: true });
+
+  // 响应来自 Extension Popup 的本地嗅探请求 (SNIFF_LOCAL_MEDIA)
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "SNIFF_LOCAL_MEDIA") {
+      const res = sniffDouyinLocalMedia();
+      sendResponse(res || { success: false });
+      return true;
+    }
+  });
+
+  function sniffDouyinLocalMedia() {
+    try {
+      const v = document.querySelector('div[data-e2e="feed-active-video"] video') || document.querySelector("video");
+      const src = v?.currentSrc || v?.src || v?.querySelector("source")?.src || "";
+      const title =
+        document.querySelector('span[data-e2e="video-desc"]')?.textContent?.trim() ||
+        document.title.replace(/- 抖音.*$/, "").trim() ||
+        "douyin_video";
+
+      if (src && /^https?:\/\//i.test(src)) {
+        return {
+          success: true,
+          info: {
+            title: title,
+            platform: "douyin",
+            medias: [
+              {
+                format: "mp4",
+                quality: "原画",
+                url: src,
+                raw_url: src,
+                size: ""
+              }
+            ]
+          }
+        };
+      }
+    } catch (e) {
+      console.warn("[VThreads Douyin] Local sniff error:", e);
+    }
+    return null;
+  }
 
   scanAndInjectDouyin();
 })();

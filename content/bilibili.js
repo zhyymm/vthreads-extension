@@ -31,6 +31,14 @@
         btn.classList.add("is-loading");
 
         try {
+          // 优先就地嗅探本地页面中的 playinfo (0 服务端 Cookie, 0 服务端风控)
+          const localInfo = sniffBilibiliPlayinfo();
+          if (localInfo && localInfo.info && localInfo.info.medias && localInfo.info.medias.length > 0) {
+            btn.classList.remove("is-loading");
+            showQualityPopover(btn, localInfo.info, false, "");
+            return;
+          }
+
           const resp = await chrome.runtime.sendMessage({
             action: "EXTRACT_VIDEO",
             url: window.location.href
@@ -244,6 +252,99 @@
   });
 
   observer.observe(document.body, { childList: true, subtree: true });
+
+  // 响应来自 Extension Popup 的本地嗅探请求 (SNIFF_LOCAL_MEDIA)
+  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "SNIFF_LOCAL_MEDIA") {
+      const res = sniffBilibiliPlayinfo();
+      sendResponse(res || { success: false });
+      return true;
+    }
+  });
+
+  function sniffBilibiliPlayinfo() {
+    try {
+      const scripts = document.querySelectorAll("script");
+      let playinfo = null;
+      let title =
+        document.querySelector("h1.video-title")?.textContent?.trim() ||
+        document.querySelector(".video-title")?.textContent?.trim() ||
+        document.title.replace(/_哔哩哔哩.*$/, "").trim() ||
+        "bilibili_video";
+
+      for (const s of scripts) {
+        const text = s.textContent || "";
+        if (text.includes("window.__playinfo__=")) {
+          try {
+            const raw = text.split("window.__playinfo__=")[1].split("</script>")[0].split(";\n")[0].split(";var")[0];
+            playinfo = JSON.parse(raw.trim().replace(/;$/, ""));
+            break;
+          } catch (e) {}
+        }
+      }
+
+      if (playinfo && playinfo.data && playinfo.data.dash) {
+        const dash = playinfo.data.dash;
+        const videoList = dash.video || [];
+        const audioList = dash.audio || [];
+        const bestAudio = audioList[0]?.baseUrl || audioList[0]?.backupUrl?.[0] || "";
+
+        const medias = [];
+        const seenQuality = new Set();
+
+        videoList.forEach((v) => {
+          const q = v.id || 80;
+          let qName = "1080P";
+          if (q >= 116) qName = "4K";
+          else if (q >= 80) qName = "1080P";
+          else if (q >= 64) qName = "720P";
+          else qName = "480P";
+
+          if (!seenQuality.has(qName)) {
+            seenQuality.add(qName);
+            const vUrl = v.baseUrl || v.backupUrl?.[0] || "";
+            if (vUrl) {
+              const mergeUrl = `https://vthreads.top/api/download_merge?video_url=${encodeURIComponent(
+                vUrl
+              )}&audio_url=${encodeURIComponent(bestAudio)}&title=${encodeURIComponent(title)}`;
+
+              medias.push({
+                format: "mp4",
+                quality: qName,
+                url: mergeUrl,
+                raw_url: vUrl,
+                size: ""
+              });
+            }
+          }
+        });
+
+        if (bestAudio) {
+          medias.push({
+            format: "mp3",
+            quality: "Audio 128k",
+            url: bestAudio,
+            raw_url: bestAudio,
+            size: ""
+          });
+        }
+
+        if (medias.length > 0) {
+          return {
+            success: true,
+            info: {
+              title: title,
+              platform: "bilibili",
+              medias: medias
+            }
+          };
+        }
+      }
+    } catch (err) {
+      console.warn("[VThreads Bilibili] Local sniff error:", err);
+    }
+    return null;
+  }
 
   scanAndInjectBilibili();
 })();

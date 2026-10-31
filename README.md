@@ -8,7 +8,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-success.svg)](https://developer.chrome.com/docs/extensions/mv3/intro/)
-[![Version](https://img.shields.io/badge/version-1.0.2-orange.svg)](https://github.com/zhyymm/vthreads-extension/releases)
+[![Version](https://img.shields.io/badge/version-1.0.3-orange.svg)](https://github.com/zhyymm/vthreads-extension/releases)
 [![Website](https://img.shields.io/badge/Official%20Website-vthreads.top-6366f1.svg)](https://vthreads.top)
 [![Chrome Web Store](https://img.shields.io/badge/Browser%20Support-Chrome%20%7C%20Edge%20%7C%20Brave-brightgreen.svg)](#installation)
 

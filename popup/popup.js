@@ -192,6 +192,35 @@ async function handleExtract(overrideUrl) {
   hideResult();
   hideError();
 
+  // 优先尝试与当前页面的 Content Script 通信进行就地嗅探（0 依赖服务端 Cookie，0 服务端封禁）
+  try {
+    const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (activeTab && activeTab.id && activeTab.url) {
+      const activeUrl = activeTab.url.split("?")[0].replace(/\/$/, "");
+      const reqUrl = targetUrl.split("?")[0].replace(/\/$/, "");
+      if (activeUrl === reqUrl || activeUrl.includes(reqUrl) || reqUrl.includes(activeUrl)) {
+        const sniffResult = await new Promise((resolve) => {
+          chrome.tabs.sendMessage(activeTab.id, { action: "SNIFF_LOCAL_MEDIA", url: targetUrl }, (resp) => {
+            if (chrome.runtime.lastError || !resp || !resp.success) {
+              resolve(null);
+            } else {
+              resolve(resp.info);
+            }
+          });
+        });
+        if (sniffResult && sniffResult.medias && sniffResult.medias.length > 0) {
+          console.log("[VThreads Popup] 本地嗅探解析成功，无需经过服务端 Cookie:", sniffResult);
+          currentExtraction = sniffResult;
+          renderResult(sniffResult);
+          showLoading(false);
+          return;
+        }
+      }
+    }
+  } catch (e) {
+    console.log("[VThreads Popup] 本地嗅探跳过:", e);
+  }
+
   try {
     let vid = await ensureSessionAndVid();
     currentVid = vid;
@@ -278,16 +307,21 @@ function renderResult(info) {
 
     // 优先直连平台官方高速 CDN（走用户本地家庭宽带，0 服务器流量）
     let downloadUrl = m.raw_url || m.url || "";
-    if (downloadUrl.startsWith("/")) {
-      downloadUrl = `${API_BASE}${downloadUrl}`;
-    }
     if (downloadUrl.includes("/api/proxy")) {
-      const sep = downloadUrl.includes("?") ? "&" : "?";
-      if (!downloadUrl.includes("vid=") && currentVid) {
-        downloadUrl += `${sep}vid=${encodeURIComponent(currentVid)}&client=extension`;
-      } else if (!downloadUrl.includes("client=")) {
-        downloadUrl += `${sep}client=extension`;
+      try {
+        const fullUrl = downloadUrl.startsWith("http") ? downloadUrl : `${API_BASE}${downloadUrl}`;
+        const uObj = new URL(fullUrl);
+        const rawCdn = uObj.searchParams.get("url");
+        if (rawCdn && /^https?:\/\//i.test(rawCdn)) {
+          downloadUrl = rawCdn;
+        } else {
+          downloadUrl = fullUrl;
+        }
+      } catch (e) {
+        if (downloadUrl.startsWith("/")) downloadUrl = `${API_BASE}${downloadUrl}`;
       }
+    } else if (downloadUrl.startsWith("/")) {
+      downloadUrl = `${API_BASE}${downloadUrl}`;
     }
 
     const isAudio = m.format === "mp3" || /audio/i.test(m.quality);
