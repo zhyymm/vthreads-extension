@@ -50,7 +50,7 @@ Powered by the high-speed parsing engine at [VThreads.top](https://vthreads.top)
 | **Douyin** (`douyin.com`) | ✅ Yes | 1080P HD | Short Videos, Music, Live Photos |
 | **Bilibili** (`bilibili.com`) | ✅ Yes | 1080P / 4K | Bangumi, UGC Videos |
 
-> Need to parse links from other platforms (YouTube, Reddit, Facebook, Pinterest, Kuaishou, etc.)? You can directly use our [Universal Web Downloader](https://vthreads.top).
+> Need to parse links from other platforms (Reddit, Facebook, Pinterest, Kuaishou, etc.)? You can directly use our [Universal Web Downloader](https://vthreads.top).
 
 ---
 

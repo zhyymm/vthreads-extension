@@ -182,9 +182,14 @@ async function handleExtract(overrideUrl) {
     return;
   }
 
-  // Google Chrome Web Store 政策合规：如遇 YouTube，提示前往官网解析
+  // Google Chrome Web Store 政策合规：严格禁止下载 YouTube，且不得引导至第三方网站
   if (/youtube\.com|youtu\.be/i.test(targetUrl)) {
-    showError("根据应用商店合规政策，YouTube 视频请前往 VThreads 官网免安装解析。");
+    const isZh = chrome.i18n.getUILanguage().startsWith("zh");
+    showError(
+      isZh
+        ? "受 Chrome 应用商店政策及服务条款限制，本扩展不支持下载 YouTube 视频。"
+        : "Due to Chrome Web Store policy and terms of service, downloading videos from YouTube is not supported."
+    );
     return;
   }
 
